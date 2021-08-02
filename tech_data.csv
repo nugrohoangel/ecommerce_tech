@@ -1,0 +1,33 @@
+﻿Technology Name,Business Capability,Use Case,Vendors
+Dynamic Pricing,Payments,"Dynamically set prices based on market
+ trends and customer profile.","""Fabric, prisync, skuddle, qualtrics coreXM"""
+Chatbot,Customer Support,"Provide customer support with a bot that
+ generates responses to customer
+ queries.","""Sapling intelligence, Inbenta, HubSpot, Verint"" "
+Intelligent Search,Search,"Suggest and find relevant products with 
+advanced semantic search that goes 
+beyond text matching.","""Microsoft, SearchUnify, Zoovu"""
+Visual Search,Search,"Search for products based on an image
+ from a customer input to easily locate
+ products with complex names or are
+ visually similar.","""Partium, Clarifai"""
+Augmented and Virtual Reality,Product Visualization,Display products via AR or VR to showcase product specs and enhance the customer's digital experience. ,Augment
+Thing Commerce,Customer Support,Customers can order products or learn about the Honeywell brand by interacting with their Alexa or Google Home.,"""Say it Now, Linc"""
+Payment as as Package Service,Payments,Offer payment processing capabilities to merchant customers to streamline payment process and create new revenue streams.,"""Finix, Payrix, Infinicept"""
+Enterprise Marketplace,Selling Tools,Offer platform for third-party sellers to help bring products to end users efficiently. Combine vendor onboarding and order management.,"""Avetti Commerce, Magento Marketplace"""
+Customer Journey Analytics,Personalization,Compile data points from steps of the customer journey to identify customer interest and improve user experience satisfaction.,"Bryter CX, Salesforce"
+Progressive Web Apps,User Experience,Provide a mobile experience for customers to access the e-commerce site and shop for products on their device.,Adobe Magento
+Personalization Engine,Personalization,Recommend products or deliver certain interactions on site based on user profile to drive personal experience.,Algonomy
+Voice Search,Search,Make product search more accessible with a voice search option. Guided selling can also take place over a voice channel like a home device or mobile phone.,Algolia
+Product Recommendations,Personalization,Tailor site experience to showcase products or promotions for a customer profile or segment to increase conversion rate. ,"""Adobe, Certona, Dynamic Yield"""
+Fraud Detection,Security,Get judgement on potential suspicious activity on customer accounts to prevent customer data from being comprised and revenue loss from false transactions.,Feedzai
+Cart Reminders,User Experience,Trigger abandoned cart emails or pop-ups when a customer does not go through with their order or is about to leave the shopping page.,Gleam Capture
+Content Generation,User Experience,Automate description making for product catalogs or write up product articles to showcase new features. ,"""Adzis, Ginnie"""
+Computer Vision,Security,Identify visual features to verify authencity of online listings and protect brand. ,"""3PM, fellowAI"""
+Composable Commerce,Selling Tools,Architectural approach to e-commerce system where sites are built from packaged capabilities to create a more flexible and innovative architecture.,"""Algolia, Amplience, commercetools, Contentstack, Elastic Path, Kibo"" "
+Visual Configurators,Product Visualization,Display complex and configurable products as a self-service tool for buyers.,"""KBMax, Driveworks"""
+Guided Selling,Selling Tools,Self-service tool for customers to discover products based on questions to guide them through product requirements.,Zoovu
+Digital Experience Platform,User Experience,Customize featured products and website content to customer profile or segment.,Bloomreach
+Automatic Proposal Generator,Payments,Automate contract creation and determine accurate pricing level according to customer profile. ,"Conga, Vendavo, Exalt Solutions"
+Intelligent Comparison,Selling Tools,Guide customers through similar products to help them compare and evaluate different features.,
+Customer Data Platform,Personalization,Collect customer data from multiple channel including product history and customer service interaction to build cohesive profiles.,"""Acquia, Adobe, BlueConic"" "

@@ -1,0 +1,381 @@
+<html>
+<head>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+    <h1>E-Commerce Technology Map</h1>
+    <div id="whole-thing">
+      <div id="graph">
+        <svg id="scatterplot" width="700" height="400"></svg>
+      </div>
+      <div id="filters">
+        <svg id="hover-box" width = "600" height = "500"></svg>
+      </div>
+    </div>
+</body>
+
+<style>
+
+  h1 {
+    font-family: sans-serif;
+    margin: 20px;
+  }
+  g.mouseover rect {
+    fill: white;
+    stroke: none;
+    stroke-width: 3px;
+    }
+    g.mouseover text {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+    g.mouseover text:first-child {
+      font-weight: bold;
+    }
+    #hover-text {
+      text-decoration: underline;
+    }
+    #whole-thing {
+      display: flex;
+      flex-direction: row;
+    }
+
+</style>
+
+
+<script>
+  const svg = d3.select("svg#scatterplot");
+  const hover_box = d3.select("svg#hover-box");
+
+  const width = svg.attr("width");
+  const height = svg.attr("height");
+  const margin = {top: 20, right: 20, bottom: 20, left: 20};
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
+
+  const pbox_x = 20;
+  const pbox_y = 20;
+
+  const long = 250
+  const short = 125
+  const gap = 10
+
+  text_margin_x = 5
+  text_margin_y = 20
+
+  //personalization
+  let personalization_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x)
+                                              .attr("y", pbox_y)
+                                              .attr("height", short)
+                                              .attr("width", long)
+                                              .attr("fill", "#b3de69"); //green
+  let personalization_title = svg.append("text").text("Personalization")
+                                                .attr("x", pbox_x + text_margin_x)
+                                                .attr("y", pbox_y + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+  //Search
+  let search_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x + (long+short+gap*2))
+                                              .attr("y", pbox_y)
+                                              .attr("height", short)
+                                              .attr("width", long + gap)
+                                              .attr("fill", "#fdb462"); //orange
+  let search_title = svg.append("text").text("Search")
+                                                .attr("x", pbox_x + (long+short+gap*2)+ text_margin_x)
+                                                .attr("y", pbox_y + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+//customer support
+  let support_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x + (long+gap))
+                                              .attr("y", pbox_y)
+                                              .attr("height", short)
+                                              .attr("width", short)
+                                              .attr("fill", "#80b1d3"); //blue
+  let support_title = svg.append("text").text("Customer")
+                                                .attr("x", pbox_x + (long+gap) + text_margin_x)
+                                                .attr("y", pbox_y + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+   let support_title2 = svg.append("text").text("Support")
+                                                .attr("x", pbox_x + (long+gap) + text_margin_x)
+                                                .attr("y", pbox_y + text_margin_y*2)
+                                                .style("font", "bold 16px sans-serif");                                             
+   //payments                                             
+  let payments_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x + (long+short+gap*2))
+                                              .attr("y", pbox_y + (short+gap))
+                                              .attr("height", short)
+                                              .attr("width", long + gap)
+                                              .attr("fill", "#fb8072"); //red
+  let payments_title = svg.append("text").text("Payments")
+                                                .attr("x", pbox_x + (long+short+gap*2) + text_margin_x)
+                                                .attr("y", pbox_y + (short+gap) + text_margin_y)
+                                                .style("font", "bold 16px sans-serif"); 
+   //selling tools                                             
+  let selling_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x)
+                                              .attr("y", pbox_y + (short+gap))
+                                              .attr("height", short)
+                                              .attr("width", long)
+                                              .attr("fill", "#bebada"); //purple
+  let selling_title = svg.append("text").text("Selling Tools")
+                                                .attr("x", pbox_x + text_margin_x)
+                                                .attr("y", pbox_y + (short+gap)+ text_margin_y)
+                                                .style("font", "bold 16px sans-serif");                                                                               
+    //security
+    let security_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x + (long+gap)) 
+                                              .attr("y", pbox_y + (short+gap))
+                                              .attr("height", short)
+                                              .attr("width", short)
+                                              .attr("fill", "#ffffb3"); //yellow
+    let security_title = svg.append("text").text("Security")
+                                                .attr("x", pbox_x + (long+gap) + text_margin_x)
+                                                .attr("y", pbox_y + (short+gap) + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+    //user experience
+    let ux_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x)
+                                              .attr("y", pbox_y + (short + short +gap*2))
+                                              .attr("height", short)
+                                              .attr("width", long + short/2 + gap)
+                                              .attr("fill", "#8dd3c7"); //blue
+    let ux_title = svg.append("text").text("User Experience")
+                                                .attr("x", pbox_x + text_margin_x)
+                                                .attr("y", pbox_y + (short + short +gap*2) + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+    //product visualization
+    let pv_box = svg.append("rect").attr("class", "personalization")
+                                              .attr("x", pbox_x + (long+gap + short/2 + gap))
+                                              .attr("y", pbox_y + (short + short +gap*2))
+                                              .attr("height", short)
+                                              .attr("width", long +short/2 + gap)
+                                              .attr("fill", "#fccde5"); //pink
+    let pv_title = svg.append("text").text("Product Visualization")
+                                                .attr("x", pbox_x + (long+gap + short/2 + gap) + text_margin_x)
+                                                .attr("y", pbox_y + (short + short +gap*2) + text_margin_y)
+                                                .style("font", "bold 16px sans-serif");
+
+  let annotations = svg.append("g").attr("id","annotations");
+  let scatter = svg.append("g").attr("id","points")
+                .attr("transform","translate("+margin.left+","+margin.top+")");
+  let label = svg.append("text").attr("id", "label")
+                .attr("x", "590")
+                .attr("y", "5")
+                .attr("text-anchor", "end")
+                .attr("alignment-baseline", "hanging");
+
+  //hover
+  const visible = hover_box.append("g").attr("class","mouseover")
+                                      .attr("transform",`translate(80, 80)`);
+  const mouseover = hover_box.append("g").attr("class","mouseover")
+                      .attr("transform",`translate(80, 80)`);
+
+  //Ciation: function stringLen by Jeff Rzeszotarski, lecture notes March 17, 2021
+  function stringLen(str) {
+    const dummytext = mouseover.append("text").attr("class","legendtext").attr("visibility","hidden");
+    dummytext.text(str)
+    let len = dummytext.node().getComputedTextLength()
+    dummytext.remove()
+    return len;
+  }
+
+  const frame = visible.append("rect").attr("class","frame")
+                       .attr("x", 0).attr("y", 0)
+                       .attr("rx", 5).attr("ry", 5)
+                       .attr("height", 230)
+                       .attr("width", 350);
+  const hover_text = visible.append("text").text("Hover over a technology name for more info:")
+                                            .attr("id", "hover-text")
+                                            .attr("transform","translate(10,30)");
+  const textbox = mouseover.append("g").attr("transform","translate(10,30)");
+  //const format = d3.format('$,');
+  //const format_per = d3.format('.0%')
+
+  function updateMouseover(name) {
+  console.log("check")
+  console.log(name)
+  d3.csv("tech_data.csv", d3.autoType).then( (data) => {
+    newData = data.filter(d => { return d["Technology Name"] == name })
+
+  textbox.html('');
+
+  newData.forEach((d,i) => {
+
+  let techName = `${d['Technology Name']}`;
+  let capability = `Business Capability: ${d['Business Capability']}`;
+  let useCase = `Use Case: ${d['Use Case']}`;
+  
+  let small = useCase
+  let text_list = [];
+  let ind = 0
+  if (small.length < 60) {
+    text_list.push(small)
+  }
+  while (small.length > 20) {
+    ind = 50 + small.substring(50,).indexOf(" ")
+    text_list.push(small.substring(0,ind))
+    small = small.substring(ind, )
+    if (small.length < 20) {
+      text_list[text_list.length-1] = text_list[text_list.length-1] + small
+    }
+   }
+   
+  console.log(text_list)
+  let vendors = `Vendors: ${d['Vendors']}`;
+
+  let maxWidth = Math.max( stringLen(techName), stringLen(capability), stringLen(useCase), stringLen(vendors) )
+  frame.attr("width", maxWidth+60);
+
+  textbox.append("text").text(techName)
+         .attr("x", 0).attr("y", 30);
+  textbox.append("text").text(capability)
+         .attr("x", 0).attr("y", 60);
+  textbox.append("text").text(vendors)
+          .attr("x", 0).attr("y", 90);
+  
+  // textbox.append("text").text(useCase)
+  //        .attr("x", 0).attr("y", 90);
+  let ypos = 120
+  text_list.forEach( (t, i) => {
+    textbox.append("text").text(t)
+          .attr("x", 0).attr("y", ypos);
+    ypos = ypos + 30
+  })
+  });
+  });
+
+  }
+
+  function mouseOverEffect() {
+    console.log("hiiii")
+    //this.classList.add("hov");
+    d3.select(this).transition().duration(200)
+        .style("text-decoration", "underline");
+    //hover
+    mouseover.attr("visibility","");
+    updateMouseover(this.textContent);
+  }
+  function mouseOutEffect() {
+    console.log("yoo")
+    //this.classList.remove("hov");
+    d3.select(this).transition().duration(200)
+        .style("text-decoration", "none");
+    //hover
+    mouseover.attr("visibility","hidden");
+  }
+
+  d3.select("#label").raise();
+
+  d3.csv("tech_data.csv", d3.autoType).then( (data) => {
+    console.log("hello?")
+
+    console.log(data);
+
+    const spacing = 20
+    let start_x = pbox_x + text_margin_x
+    let start_y = pbox_y + text_margin_y + spacing
+
+    let sx2 = pbox_x + (long+10) + text_margin_x 
+    let sy2 = pbox_y + text_margin_y + spacing*2
+
+    let sx3 = pbox_x + (long+short+gap*2) + text_margin_x
+    let sy3 = pbox_y + text_margin_y + spacing
+    
+    let sx4 = pbox_x + (long+10) + text_margin_x //security
+    let sy4 = pbox_y + (short+gap) + text_margin_y + spacing
+
+    let sx5 = pbox_x + text_margin_x //selling tools
+    let sy5 = pbox_y + (short+gap)+ text_margin_y + spacing
+
+    let sx6 = pbox_x + (long +short +gap*2) + text_margin_x
+    let sy6 = pbox_y + (short+gap) + text_margin_y + spacing
+
+    let sx7 = pbox_x + text_margin_x
+    let sy7 = pbox_y + (short + short +gap*2) + text_margin_y + spacing
+
+    let sx8 = pbox_x + (long+gap + short/2 + gap) + text_margin_x
+    let sy8 = pbox_y + (short + short +gap*2) + text_margin_y + spacing
+
+    data.forEach((d,i) => {
+      
+      if (d["Business Capability"] === "Personalization") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", start_x)
+                        .attr("y", start_y)
+                        .style("font", "14px sans-serif");
+        start_y = start_y + 20;
+      }
+      if (d["Business Capability"] === "Customer Support") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx2)
+                        .attr("y", sy2)
+                        .style("font", "14px sans-serif");
+        sy2 = sy2 + 20;
+      }
+      if (d["Business Capability"] === "Search") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx3)
+                        .attr("y", sy3)
+                        .style("font", "14px sans-serif");
+        sy3 = sy3 + 20;
+      }
+      if (d["Business Capability"] === "Selling Tools") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx5)
+                        .attr("y", sy5)
+                        .style("font", "14px sans-serif");
+        sy5 = sy5 + 20;
+      }
+      if (d["Business Capability"] === "Security") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx4)
+                        .attr("y", sy4)
+                        .style("font", "14px sans-serif");
+        sy4 = sy4 + 20;
+      }
+      if (d["Business Capability"] === "Payments") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx6)
+                        .attr("y", sy6)
+                        .style("font", "14px sans-serif");
+        sy6 = sy6 + 20;
+      }
+      if (d["Business Capability"] === "User Experience") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx7)
+                        .attr("y", sy7)
+                        .style("font", "14px sans-serif");
+        sy7 = sy7 + 20;
+      }
+      if (d["Business Capability"] === "Product Visualization") {
+        svg.append("text").text(d["Technology Name"])
+                        .attr("class", "data")
+                        .attr("x", sx8)
+                        .attr("y", sy8)
+                        .style("font", "14px sans-serif");
+        sy8 = sy8 + 20;
+      }
+      
+    })
+  
+    //hover from scratch
+    var names = document.getElementsByClassName('data');
+    for (var i = 0; i < names.length; i++) {
+    names[i].addEventListener('mouseover', mouseOverEffect);
+    names[i].addEventListener('mouseout', mouseOutEffect);
+    }
+
+    });
+
+</script>
+
+</html>
