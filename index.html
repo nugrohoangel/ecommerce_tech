@@ -172,7 +172,7 @@
   const mouseover = hover_box.append("g").attr("class","mouseover")
                       .attr("transform",`translate(80, 80)`);
 
-  //Ciation: function stringLen by Jeff Rzeszotarski, lecture notes March 17, 2021
+  //Citation: function stringLen by Jeff Rzeszotarski, INFO 2300 March 17, 2021
   function stringLen(str) {
     const dummytext = mouseover.append("text").attr("class","legendtext").attr("visibility","hidden");
     dummytext.text(str)
@@ -190,8 +190,6 @@
                                             .attr("id", "hover-text")
                                             .attr("transform","translate(10,30)");
   const textbox = mouseover.append("g").attr("transform","translate(10,30)");
-  //const format = d3.format('$,');
-  //const format_per = d3.format('.0%')
 
   function updateMouseover(name) {
   console.log("check")
@@ -210,7 +208,7 @@
   let small = useCase
   let text_list = [];
   let ind = 0
-  if (small.length < 60) {
+  if (small.length < 50) {
     text_list.push(small)
   }
   while (small.length > 20) {
@@ -235,8 +233,7 @@
   textbox.append("text").text(vendors)
           .attr("x", 0).attr("y", 90);
   
-  // textbox.append("text").text(useCase)
-  //        .attr("x", 0).attr("y", 90);
+
   let ypos = 120
   text_list.forEach( (t, i) => {
     textbox.append("text").text(t)
@@ -250,7 +247,6 @@
 
   function mouseOverEffect() {
     console.log("hiiii")
-    //this.classList.add("hov");
     d3.select(this).transition().duration(200)
         .style("text-decoration", "underline");
     //hover
